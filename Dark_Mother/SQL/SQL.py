@@ -62,3 +62,44 @@ class SQL:
     async def Table_Init(cls):
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
+
+    # Dataclass for posts | Датакласс для постов #
+    @dataclass
+    class Post:
+        name: str
+        description: str
+        link: str
+        attachments: str
+
+    # SQLAlchemy's class for posts | Класс для таблицы постов #
+    class SQL_Post(Base):
+        __tablename__ = "posts"
+        id: object = Column(Integer, primary_key=True)
+        name: object = Column(String, unique=True)
+        link: object = Column(String, unique=True)
+        author: object = Column(String)
+        create_date: object = Column(DateTime(timezone=False))
+        tags: object = relationship(
+            "SQL_Tag",
+            secondary=association,
+            back_populates="posts",
+            lazy=True,
+        )
+
+        def __repr__(self) -> str:
+            return f"{self.name}"
+
+    # SQLAlchemy's class for tags | Класс Алхимии для таблицы тэгов #
+    class SQL_Tag(Base):
+        __tablename__ = "tags"
+        id: object = Column(Integer, primary_key=True)
+        name: object = Column(String, unique=True)
+        posts: object = relationship(
+            "SQL_Post",
+            secondary=association,
+            back_populates="tags",
+            lazy=True,
+        )
+
+        def __repr__(self) -> str:
+            return f"{self.name}"
