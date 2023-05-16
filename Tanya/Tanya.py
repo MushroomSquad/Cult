@@ -100,12 +100,13 @@ class Tanya:
             find_tags = await Dark_Mother.Utils.Find(post_soup, tags_class, "href")
         except Exception as exc:
             [print(f"\t{el}") for el in str(exc).splitlines()]
-        find_image = await Dark_Mother.Utils.Find(post_soup, images_class, "src")
-        print(post_url)
-        print(find_image)
+        try:
+            find_image = await Dark_Mother.Utils.Find(post_soup, images_class, "src")
+        except Exception as exc:
+            [print(f"\t{el}") for el in str(exc).splitlines()]
         image_link = await Dark_Mother.Utils.Get_ST(find_image, "src", headers)
-        print(image_link)
-        exit()
+        with open("test.html", "w") as f:
+            f.write(response)
         tag_list = []
         for tag_el in find_tags:
             tag_link = await Dark_Mother.Utils.Get_ST(tag_el, "href", headers)
@@ -143,7 +144,6 @@ class Tanya:
         session,
         Link,
     ):
-        print(Link)
         try:
             File_Name = Path + Name + Extension
             async with session.get(url=Link, headers=headers) as response:

@@ -86,7 +86,9 @@ tags_class: Pattern = re.compile("^https://www.deviantart.com/tag/(\S+)$")
    Регулярное выражение для парсинга ссылок на тэги
    Example | Пример: https://www.deviantart.com/tag/fanart"""
 
-images_class: Pattern = re.compile("^https://images-wixmp-(\S+).wixmp.com/f/(\S+)$")
+images_class: Pattern = re.compile("^https://images-wixmp-(\S*).wixmp.com/f/(\S*)$")
+# https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3ca6e6a4-4db6-4336-9e52-051f60f5b358/dfv2v8e-70e66195-5abf-47c6-aa43-0a45bfe5bf5f.png/v1/fill/w_1280,h_911,q_80,strp/yoga_29__dancer_pose_by_sirafima_dfv2v8e-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTExIiwicGF0aCI6IlwvZlwvM2NhNmU2YTQtNGRiNi00MzM2LTllNTItMDUxZjYwZjViMzU4XC9kZnYydjhlLTcwZTY2MTk1LTVhYmYtNDdjNi1hYTQzLTBhNDViZmU1YmY1Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.gshTORv8Fr7FcbU_4FKSgruvsHIoXRSuTSRN0ZVkfVM
+
 
 """Regular expression for parsing images' links
    Регулярное выражение для парсинга ссылок на изображения

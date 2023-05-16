@@ -25,10 +25,11 @@ from datetime import datetime
 """Datetime for working with date and time
    Datetime для работы с датой и временем"""
 
-import jinja2 
+import jinja2
 
 """Jinja for working with templates
    Jinja для работы с шаблонами"""
+
 
 class Utils:
     # Get function | Функция Get #
@@ -80,6 +81,11 @@ class Utils:
                 return Find_IN.find(
                     "img",
                     attrs={"href": Searchable},
+                )
+            elif Choice == "src":
+                return Find_IN.find(
+                    "img",
+                    attrs={"src": Searchable},
                 )
         except Exception as exc:
             [print(f"\t{el}") for el in str(exc).splitlines()]
@@ -146,5 +152,3 @@ class Utils:
         Loader = jinja2.FileSystemLoader(Path)
         Env = jinja2.Environment(loader=Loader, trim_blocks=True)
         return Template.render(Data)
-
-

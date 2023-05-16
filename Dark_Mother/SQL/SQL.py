@@ -22,6 +22,29 @@ from sqlalchemy.ext.declarative import declarative_base
 Declarative base - функция для создания базового класса таблиц"""
 
 
+# SQLAlchemy setting | Настройки SQLAlchemy #
+
+Base: object = declarative_base()
+
+"""Base call for tables
+   Базовый класс для таблиц """
+
+association: object = Table(
+    "association",
+    Base.metadata,
+    Column("post_id", Integer, ForeignKey("posts.id")),
+    Column("tag_id", Integer, ForeignKey("tags.id")),
+)
+
+"""Association table for posts and tags
+   Таблица связи постов и тэгов"""
+
+from dataclasses import dataclass
+
+"""Dataclass for containing posts
+   Датакласс для хранения постов"""
+
+
 class SQL:
     # Function for saving data to DB | Сохранение информации в БД #
     @classmethod
@@ -79,7 +102,7 @@ class SQL:
         link: object = Column(String, unique=True)
         author: object = Column(String)
         create_date: object = Column(DateTime(timezone=False))
-        tags: object = relationship(
+        tags = relationship(
             "SQL_Tag",
             secondary=association,
             back_populates="posts",
@@ -94,7 +117,7 @@ class SQL:
         __tablename__ = "tags"
         id: object = Column(Integer, primary_key=True)
         name: object = Column(String, unique=True)
-        posts: object = relationship(
+        posts = relationship(
             "SQL_Post",
             secondary=association,
             back_populates="tags",
