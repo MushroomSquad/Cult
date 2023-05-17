@@ -3,6 +3,7 @@ Settings and imports for mother class
 Настройки и импорты для материнского класса
 """
 
+import os
 
 # Python base libraries | Стандартные бибилиотеки питона #\
 
@@ -33,7 +34,7 @@ import aiofiles
 """Aiofiles for async work with files
    Aiofiles для ассинхронной работы с файлами"""
 
-
+from itertools import zip_longest
 import Dark_Mother
 
 """Mother code. Inherits scripts from this
@@ -42,16 +43,16 @@ import Dark_Mother
 # Links to pages | Ссылки на стрницы #
 ALL_URL_LIST: List[str] = [
     # FAN_ART_URL =
-    # "https://www.deviantart.com/topic/fan-art",
+    "https://www.deviantart.com/topic/fan-art",
     # # FANTASY_ART_URL =
     # "https://www.deviantart.com/topic/fantasy",
     # # ANIME_ART_URL =
     # "https://www.deviantart.com/topic/anime-and-manga",
     # # DIGITAL_ART_URL =
     # "https://www.deviantart.com/topic/digital-art",
-    # HOME_URL =
-    "https://www.deviantart.com/",
-    # GENSHIN_IMPACT_URL =
+    # # HOME_URL =
+    # "https://www.deviantart.com/",
+    # # GENSHIN_IMPACT_URL =
     # "https://www.deviantart.com/tag/genshinimpact",
     # "https://www.deviantart.com/tag/genshin",
     # # ZELDA_URL =
@@ -107,6 +108,7 @@ next_index: int = 1
    Сколько ссылок на 'next' страницы будет спаршено"""
 
 __all__: List[str] = [
+    "os",
     "re",
     "asyncio",
     "Dict",
@@ -126,4 +128,5 @@ __all__: List[str] = [
     "next_index",
     "aiofiles",
     "aiofiles",
+    "zip_longest",
 ]

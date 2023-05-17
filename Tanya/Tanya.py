@@ -55,7 +55,8 @@ class Tanya:
                     )
                 )
                 tasks.append(task)
-            await asyncio.gather(*tasks)
+            async for item in Dark_Mother.Utils.progressBar(tasks, prefix = 'Progress:', suffix = 'Complete', length = 50):
+                await asyncio.gather(*tasks)
 
     @classmethod
     async def Get_Posts_Links(
@@ -105,8 +106,6 @@ class Tanya:
         except Exception as exc:
             [print(f"\t{el}") for el in str(exc).splitlines()]
         image_link = await Dark_Mother.Utils.Get_ST(find_image, "src", headers)
-        with open("test.html", "w") as f:
-            f.write(response)
         tag_list = []
         for tag_el in find_tags:
             tag_link = await Dark_Mother.Utils.Get_ST(tag_el, "href", headers)
@@ -141,14 +140,19 @@ class Tanya:
         Path,
         Name,
         Extension,
-        session,
+        aio_session,
         Link,
     ):
+        cls.variable_request: object = Dark_Mother.Variable_Requests()
         try:
             File_Name = Path + Name + Extension
-            async with session.get(url=Link, headers=headers) as response:
-                async with aiofiles.open(File_Name, "wb") as f:
-                    await f.write(await response.read())
+            response: str = await Dark_Mother.Variable_Requests.Get_Request(
+                aio_session,
+                url=Link,
+                headers=headers,
+                )
+            async with aiofiles.open(File_Name, "wb") as f:
+                await f.write(response)
 
         except Exception as exc:
             [print("\t", el) for el in str(exc).splitlines()]
@@ -173,18 +177,23 @@ class Tanya:
     @classmethod
     def run(cls):
         print(
-            f"\n\tMain pages ({len(ALL_URL_LIST)})"
-            + " | "
-            + f"Основные страницы ({len(ALL_URL_LIST)}):"
+            f"\n{f' Root pages ({len(ALL_URL_LIST)}) | Основные страницы ({len(ALL_URL_LIST)}) ':#^{os.get_terminal_size().columns}}"
         )
-        [print(url) for url in ALL_URL_LIST]
+        for url_1, url_2 in zip_longest(*[iter(ALL_URL_LIST)]*2):
+            if url_2:
+                print(f"{f'{url_1}':<{int((os.get_terminal_size().columns)/2)}}{f'{url_2}'}")
+            else:
+                print(f"{f'{url_1}'}")
+
+
+        print(f"{'':#^{os.get_terminal_size().columns}}")
         asyncio.run(cls.Get_More_Source_Task())
         print(
-            f"\nLinks to parse: {len(ALL_URL_LIST)}"
-            + " | "
-            + f"Ссылок для парсинга: {len(ALL_URL_LIST)}"
+            f"\n{f' Links for parse: {len(ALL_URL_LIST)}) | Ссылок для парсинга: {len(ALL_URL_LIST)}) ':#^{os.get_terminal_size().columns}}"
         )
         asyncio.run(cls.Task2())
-        print(len(cls.post_url_list))
+        print(
+            f"\n{f' Posts for parse: {len(cls.post_url_list)} | Постов для парсинга: {len(cls.post_url_list)} ':#^{os.get_terminal_size().columns}}"
+        )
         asyncio.run(cls.Task3())
         asyncio.run(cls.Task4())
