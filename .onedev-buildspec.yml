@@ -6,6 +6,7 @@ jobs:
     name: Sync Main (GitHub)
     remoteUrl: https://github.com/MushroomSquad/Cult
     userName: DonSudak
+    passwordSecret: github
     force: true
     condition: ALWAYS
   triggers:
