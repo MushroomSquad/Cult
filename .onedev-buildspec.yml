@@ -1,0 +1,17 @@
+version: 22
+jobs:
+- name: Upload to git's
+  steps:
+  - !PushRepository
+    name: Sync Main (GitHub)
+    remoteUrl: https://github.com/MushroomSquad/Cult
+    userName: DonSudak
+    force: true
+    condition: ALWAYS
+  triggers:
+  - !BranchUpdateTrigger
+    branches: main
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
